@@ -1,3 +1,26 @@
+import os
+import numpy as np
+import torch
+import torch.nn as nn
+from torch.utils.data import Dataset, DataLoader, random_split
+
+from PIL import Image
+import openslide
+import argparse
+import tifffile
+
+import timm
+from model.model import PatchAttention, PathologyCLIP
+from typing import Dict, List, Tuple
+import json
+
+
+Image.MAX_IMAGE_PIXELS = 30000000000
+torch.manual_seed(42)
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+L=3
+thum_x = 1024
+
 # Custom Dataset for pathology images and captions
 class PathologyDataset(Dataset):
     def __init__(self, data: dict, embed_dim: int = 512):
