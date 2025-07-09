@@ -118,8 +118,8 @@ def patch_filter(arr, white_threshold=(235, 235, 235), max_white_ratio=0.95):
 def crop_image_to_patches(vis_model, image_path, patch_size=256):
 
     pid = image_path.split('/')[-1].split('.')[0]
+    print(image_path)
 
-    
     # Open the image
     try:
         t = openslide.OpenSlide(image_path)
@@ -297,7 +297,7 @@ if __name__ == "__main__":
 
     ### load model
     model_path = './model_checkpoint.pth'
-    loaded_checkpoint = torch.load(model_path)
+    loaded_checkpoint = torch.load(model_path, map_location=torch.device(device)))
     model.load_state_dict(loaded_checkpoint['model_state_dict'])
     
     text_embs = loaded_checkpoint['text_embs'].to(device)
