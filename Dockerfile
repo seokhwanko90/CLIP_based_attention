@@ -1,6 +1,7 @@
 FROM ubuntu:22.04
 RUN apt-get -y update && apt-get install -y --no-install-recommends python3
-RUN apt-get -y install openslide-tools
+RUN apt-get update && apt-get install -y python3-pip openslide-tools \
+    && rm -rf /var/lib/apt/lists/*
 
 ENV PROJECTDIR=/opt/app
 WORKDIR $PROJECTDIR
