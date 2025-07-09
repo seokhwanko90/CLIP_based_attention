@@ -274,7 +274,7 @@ if __name__ == "__main__":
     total_pids = {}
     for _id in list_ori:
         
-        p = os.path.join(ori_path, _id)
+        p = os.path.join(input_path, _id)
         print(_id)
         one_pid = crop_image_to_patches(vis_model, p)
         
