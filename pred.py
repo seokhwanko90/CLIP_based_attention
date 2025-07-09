@@ -297,7 +297,7 @@ if __name__ == "__main__":
 
     ### load model
     model_path = './model_checkpoint.pth'
-    loaded_checkpoint = torch.load(model_path, map_location=torch.device(device)))
+    loaded_checkpoint = torch.load(model_path, map_location=torch.device(device))
     model.load_state_dict(loaded_checkpoint['model_state_dict'])
     
     text_embs = loaded_checkpoint['text_embs'].to(device)
