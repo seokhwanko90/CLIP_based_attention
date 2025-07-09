@@ -5,8 +5,8 @@ RUN apt-get update && apt-get install -y python3-pip openslide-tools \
 
 ENV PROJECTDIR=/opt/app
 WORKDIR $PROJECTDIR
-COPY model $PROJECTDIR
-COPY pretrained $PROJECTDIR
+COPY model $PROJECTDIR/model
+COPY pretrained $PROJECTDIR/pretrained
 COPY pred.py $PROJECTDIR
 COPY model_checkpoint.pth $PROJECTDIR
 
