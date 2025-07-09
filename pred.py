@@ -17,7 +17,9 @@ import json
 
 Image.MAX_IMAGE_PIXELS = 30000000000
 torch.manual_seed(42)
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+#device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+device = "cpu"
+
 L=3
 thum_x = 1024
 
@@ -264,7 +266,7 @@ if __name__ == "__main__":
     )
     vis_model = vis_model.to(device)
     
-    state_dict = torch.load(uni_enc_path, map_location=device)
+    state_dict = torch.load(uni_enc_path, map_location=torch.device(device))
     if "state_dict" in state_dict:
         state_dict = state_dict["state_dict"]
     
