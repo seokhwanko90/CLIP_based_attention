@@ -71,7 +71,7 @@ def vis_emb_gen(vis_model, vis_input):
     vis_model.eval()
     
     with torch.no_grad():
-        emb = vis_model(vis_input.to('cuda'))
+        emb = vis_model(vis_input.to(device))
 
     return emb
 
@@ -262,9 +262,9 @@ if __name__ == "__main__":
     vis_model = timm.create_model(
         "vit_large_patch16_224", img_size=224, patch_size=16, init_values=1e-5, num_classes=0, dynamic_img_size=True
     )
-    vis_model = vis_model.cuda()
+    vis_model = vis_model.to(device)
     
-    state_dict = torch.load(uni_enc_path, map_location="cuda:" + str(0))
+    state_dict = torch.load(uni_enc_path, map_location=device)
     if "state_dict" in state_dict:
         state_dict = state_dict["state_dict"]
     
@@ -291,13 +291,14 @@ if __name__ == "__main__":
         collate_fn=custom_collate_fn
     )
   
-    model = PathologyCLIP(embed_dim=512).to(device)
+    model = PathologyCLIP(embed_dim=512, device=device).to(device)
 
     ### load model
     model_path = './model_checkpoint.pth'
     loaded_checkpoint = torch.load(model_path)
     model.load_state_dict(loaded_checkpoint['model_state_dict'])
-    text_embs = loaded_checkpoint['text_embs']
+    
+    text_embs = loaded_checkpoint['text_embs'].to(device)
     text_capt = loaded_checkpoint['text_capt']
 
     pred_gth = predict_caption(model, test_loader, text_embs,text_capt, device, log=False)
